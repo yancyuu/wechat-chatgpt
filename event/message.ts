@@ -4,7 +4,6 @@ import { Contact as ContactType } from 'wechaty-puppet/types'
 import { routes } from '../message'
 import { logger } from '../lib/logger'
 import * as state from '../lib/state'
-import { Buffer } from 'buffer'
 
 // 默认只回复私聊，以及艾特我的群聊
 async function defaultFilter(msg: Message) {
@@ -58,11 +57,6 @@ export async function handleMessage(msg: Message) {
     await msg.say(replyText)
   }
   if (replyText && state.globalReplyState === 'art') {
-    const buffer = Buffer.from(replyText, 'base64')
-    const gifMessage = await MediaMessage.create({
-      type: Message.Type.Attachment,
-      content: buffer,
-    })
-    await msg.say(gifMessage)
+    await msg.say(replyText)
   }
 }

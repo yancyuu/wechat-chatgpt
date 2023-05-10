@@ -63,19 +63,19 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
   }
 }
 
-export async function getImage(prompt: string, negative_prompts: string, stype: string): Promise<string> {
+export async function getImage(prompts: string[]): Promise<string> {
   const apiKey = config.sdApiKey;
   const token = await getToken(apiKey);
 
   const payload = {
-    prompt: prompt,
+    prompt: prompts[0],
     guidance_scale: 7.5,
     height: 512,
-    negative_prompts: negative_prompts,
+    negative_prompts: prompts[2],
     sampler: 'ddim',
     seed: 1024,
     steps: 50,
-    style: stype,
+    style: prompts[3],
     upsample: 1,
     width: 512,
   };

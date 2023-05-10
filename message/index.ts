@@ -1,10 +1,11 @@
-import { Message, Sayable } from 'wechaty'
+import { Message, Sayable, MediaMessage} from 'wechaty'
 import config from '../config'
 import { reply } from '../lib/reply'
 import { getImage } from '../lib/art'
 import * as echo from './echo'
 import { cache } from '../lib/cache'
 import * as state from '../lib/state'
+import { Buffer } from 'buffer'
 
 type Route = {
   handle: ((text: string, msg: Message) => Sayable) | ((text: string, msg: Message) => Promise<Sayable>)
@@ -33,7 +34,7 @@ export const routes: Route[] = [
     handle() {
       if (state.globalReplyState === 'art') {
         state.setGlobalReplyState('text')
-        return '已切换至画图模式'
+        return '已切换至文本模式'
       }
     },
   },
@@ -66,15 +67,20 @@ export const routes: Route[] = [
             content: answer
           }
       ])
-      }else{
-        const prompts = text.split(",")
-        answer = await getImage(...prompts)
-      }
       if (msg.room()) {
         const isLontText = text.length > 20
         return `@${talker.name()}  ${text.slice(0, 20)}${isLontText ? '...' : ''}
 ---------------------------------
 ${answer}`
+      }
+      }else{
+        const prompts = text.split(",")
+        const base64Str = await getImage(prompts)
+        const buffer = Buffer.from(base64Str, 'base64')
+        answer = await MediaMessage.create({
+        type: Message.Type.Attachment,
+        content: buffer,
+        })
       }
       return answer
     },
