@@ -67,11 +67,11 @@ export async function getImage(prompts: string[]): Promise<string> {
     prompt: prompts[0],
     guidance_scale: 7.5,
     height: 512,
-    negative_prompts: prompts[2],
+    negative_prompts: prompts[1],
     sampler: 'ddim',
     seed: 1024,
     steps: 50,
-    style: prompts[3],
+    style: prompts[2],
     upsample: 1,
     width: 512,
   };
