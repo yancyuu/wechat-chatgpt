@@ -6,6 +6,7 @@ import * as echo from './echo'
 import { cache } from '../lib/cache'
 import * as state from '../lib/state'
 import { Buffer } from 'buffer'
+import { writeFileSync } from 'fs';
 
 type Route = {
   handle: ((text: string, msg: Message) => Sayable) | ((text: string, msg: Message) => Promise<Sayable>)
@@ -77,7 +78,9 @@ ${answer}`
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
         const buffer = Buffer.from(base64Str, 'base64');
-        answer = FileBox.fromBuffer(buffer, 'image.png');
+        const imagePath = './image.png';
+        writeFileSync(imagePath, buffer);
+        answer = FileBox.fromFile(imagePath);
       }
       return answer
     },
