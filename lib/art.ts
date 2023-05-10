@@ -67,7 +67,7 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
 export async function getImage(prompts: string[]): Promise<string> {
   const apiKey = config.sdApiKey;
   const token = await getToken(apiKey);
-
+  logger.info("getImage----->token---------> "+ token);
   const payload = {
     prompt: prompts[0],
     guidance_scale: 7.5,
