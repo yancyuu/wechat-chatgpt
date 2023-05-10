@@ -53,10 +53,7 @@ export async function handleMessage(msg: Message) {
       user: msg.talker().name(),
       group
     })
-  if (replyText && state.globalReplyState === 'text') {
-    await msg.say(replyText)
-  }
-  if (replyText && state.globalReplyState === 'art') {
+  if (replyText) {
     await msg.say(replyText)
   }
 }
