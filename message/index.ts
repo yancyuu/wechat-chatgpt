@@ -76,7 +76,8 @@ ${answer}`
       }else{
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
-        answer = FileBox.fromBase64(base64Str, '.image.png');
+        const dataUrl = 'data:image/png;base64,' + base64Str;
+        answer = FileBox.fromDataURL(dataUrl, 'image.png');
       }
       return answer
     },
