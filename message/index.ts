@@ -4,6 +4,7 @@ import { reply } from '../lib/reply'
 import { getImage } from '../lib/art'
 import { cache } from '../lib/cache'
 import * as state from '../lib/state'
+import { logger } from '../lib/logger'
 
 type Route = {
   handle: ((text: string, msg: Message) => Sayable) | ((text: string, msg: Message) => Promise<Sayable>)
@@ -24,7 +25,7 @@ export const routes: Route[] = [
       if (state.globalReplyState === 'text') {
         state.setGlobalReplyState('art')  
       } 
-      return '已切换至画图模式'
+      return '已切换至画图模式，格式: 描述词/环境描述/画风'
     },
   },
   {
@@ -74,6 +75,7 @@ ${answer}`
       }else{
         const { FileBox }  = require('file-box')
         const prompts = text.split(",")
+        logger.info(prompts)
         const base64Str = await getImage(prompts)
         answer = FileBox.fromBase64(base64Str, 'sd-created.png');
       }

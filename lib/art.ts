@@ -77,6 +77,5 @@ export async function getImage(prompts: string[]): Promise<string> {
   };
 
   const response = await getTextToImage(token, payload);
-  logger.info(response);
   return response;
 }
