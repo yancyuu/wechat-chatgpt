@@ -1,4 +1,4 @@
-import { Message, Sayable, MediaMessage} from 'wechaty'
+import { Message, Sayable, FileBox} from 'wechaty'
 import config from '../config'
 import { reply } from '../lib/reply'
 import { getImage } from '../lib/art'
@@ -76,11 +76,7 @@ ${answer}`
       }else{
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
-        const buffer = Buffer.from(base64Str, 'base64')
-        answer = await MediaMessage.create({
-        type: Message.Type.Attachment,
-        content: buffer,
-        })
+        answer = FileBox.fromBase64(base64Str, '.image.png');
       }
       return answer
     },
