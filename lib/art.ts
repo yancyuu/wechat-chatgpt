@@ -19,9 +19,7 @@ interface TextToImageResponse {
 async function getToken(apiKey: string): Promise<string> {
   const url = 'https://flagopen.baai.ac.cn/flagStudio/auth/getToken';
 
-  const querystring = {
-    apikey: apiKey,
-  };
+  const querystring ="?apikey="+ apiKey;
 
   const headers = {
     Accept: 'application/json',
