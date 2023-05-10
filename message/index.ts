@@ -77,7 +77,7 @@ ${answer}`
       }
       }else{
         const { FileBox }  = require('file-box')
-        const prompts = text.split(",")
+        const prompts = text.split("/")
         logger.info(prompts)
         const base64Str = await getImage(prompts)
         answer = FileBox.fromBase64(base64Str, 'sd-created.png');
