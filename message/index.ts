@@ -22,6 +22,9 @@ export const routes: Route[] = [
   {
     keyword: '/art',
     handle() {
+      if (!config.sdApiKey){
+        return "无绘画功能可用"
+      }
       if (state.globalReplyState === 'text') {
         state.setGlobalReplyState('art')  
       } 
