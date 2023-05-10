@@ -20,13 +20,22 @@ async function getToken(apiKey: string): Promise<string> {
   const querystring = {
     apikey: apiKey,
   };
-
+  // TODO: wretch retry 中间件无法返回 40x 异常，需修复
+  const w = wretch(config.sdBaseURL).middlewares([
+    // retry({
+    //   delayTimer: 500,
+    //   maxAttempts: 3,
+    //   until (response, error) {
+    //     return response && response.ok
+    //   }
+    // })
+  ])
   const headers = {
     Accept: 'application/json',
   };
 
   try {
-    const response: TokenResponse = await wretch(config.sdBaseURL).url("/auth/getToken")
+    const response: TokenResponse = w.url("/auth/getToken")
       .query(querystring)
       .headers(headers)
       .get()
@@ -41,6 +50,17 @@ async function getToken(apiKey: string): Promise<string> {
 
 async function getTextToImage(token: string, payload: object): Promise<string> {
 
+  // TODO: wretch retry 中间件无法返回 40x 异常，需修复
+  const w = wretch(config.sdBaseURL).middlewares([
+    // retry({
+    //   delayTimer: 500,
+    //   maxAttempts: 3,
+    //   until (response, error) {
+    //     return response && response.ok
+    //   }
+    // })
+  ])
+
   const headers = {
     'Content-Type': 'application/json',
     Accept: 'application/json',
@@ -48,7 +68,7 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
   };
 
   try {
-    const response: TextToImageResponse = await wretch(config.sdBaseURL).url("/v1/text2img")
+    const response: TextToImageResponse = w.url("/v1/text2img")
       .headers(headers)
       .post(payload)
       .json();
