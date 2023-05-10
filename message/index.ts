@@ -2,11 +2,8 @@ import { Message, Sayable, FileBox} from 'wechaty'
 import config from '../config'
 import { reply } from '../lib/reply'
 import { getImage } from '../lib/art'
-import * as echo from './echo'
 import { cache } from '../lib/cache'
 import * as state from '../lib/state'
-import { Buffer } from 'buffer'
-import { writeFileSync } from 'fs';
 
 type Route = {
   handle: ((text: string, msg: Message) => Sayable) | ((text: string, msg: Message) => Promise<Sayable>)
@@ -75,6 +72,7 @@ export const routes: Route[] = [
 ${answer}`
       }
       }else{
+        const { FileBox }  = require('file-box')
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
         answer = FileBox.FromBase64(base64Str);
