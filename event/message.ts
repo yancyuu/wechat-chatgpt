@@ -42,7 +42,8 @@ export async function handleMessage(msg: Message) {
     return
   }
   const replyText = await route.handle(text, msg)
-  let group = null
+  if (replyText) {
+    let group = null
     if (msg.room()) {
       group = await msg.room().topic()
     }
@@ -52,7 +53,6 @@ export async function handleMessage(msg: Message) {
       user: msg.talker().name(),
       group
     })
-  if (replyText) {
     await msg.say(replyText)
   }
 }

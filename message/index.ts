@@ -48,7 +48,7 @@ export const routes: Route[] = [
       const conversation = msg.conversation()
       const key = `Conversation:${conversation.id}:Message`
       const history: any = cache.get(key) || []
-      let answer: string | undefined;
+      let answer: string | undefined | MediaMessage;
       if (state.globalReplyState === 'text'){
         answer = await reply([
           ...history,
@@ -69,7 +69,7 @@ export const routes: Route[] = [
       ])
       if (msg.room()) {
         const isLontText = text.length > 20
-        return `@${talker.name()}  ${text.slice(0, 20)}${isLontText ? '...' : ''}
+        answer = `@${talker.name()}  ${text.slice(0, 20)}${isLontText ? '...' : ''}
 ---------------------------------
 ${answer}`
       }
