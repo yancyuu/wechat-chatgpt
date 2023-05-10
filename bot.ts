@@ -55,7 +55,7 @@ if (require.main === module) {
         .handleMessage(msg)
         .catch(e => {
           Sentry.captureException(e)
-          return msg.say('抱歉，我发生了一点小意外。')
+          return msg.say(e.message)
         })
         .catch(e => {
           Sentry.captureException(e)
