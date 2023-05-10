@@ -35,10 +35,9 @@ async function getToken(apiKey: string): Promise<string> {
   };
 
   try {
-    const response: TokenResponse = w.url("/auth/getToken")
-      .query(querystring)
+    const response: TokenResponse =await w.url("/auth/getToken")
       .headers(headers)
-      .get()
+      .get(querystring)
       .json();
 
     return response.data.token;
@@ -68,7 +67,7 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
   };
 
   try {
-    const response: TextToImageResponse = w.url("/v1/text2img")
+    const response: TextToImageResponse =await w.url("/v1/text2img")
       .headers(headers)
       .post(payload)
       .json();
