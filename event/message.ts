@@ -1,9 +1,8 @@
-import { Message, MediaMessage } from 'wechaty'
+import { Message } from 'wechaty'
 import { Message as MessageType } from 'wechaty-puppet/types'
 import { Contact as ContactType } from 'wechaty-puppet/types'
 import { routes } from '../message'
 import { logger } from '../lib/logger'
-import * as state from '../lib/state'
 
 // 默认只回复私聊，以及艾特我的群聊
 async function defaultFilter(msg: Message) {

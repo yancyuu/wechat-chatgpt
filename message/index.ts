@@ -24,9 +24,9 @@ export const routes: Route[] = [
     keyword: '/art',
     handle() {
       if (state.globalReplyState === 'text') {
-        state.setGlobalReplyState('art')
-        return '已切换至画图模式'
+        state.setGlobalReplyState('art')  
       } 
+      return '已切换至画图模式'
     },
   },
   {
@@ -34,8 +34,8 @@ export const routes: Route[] = [
     handle() {
       if (state.globalReplyState === 'art') {
         state.setGlobalReplyState('text')
-        return '已切换至文本模式'
       }
+      return '已切换至文本模式'
     },
   },
   {
