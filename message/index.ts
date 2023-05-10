@@ -49,7 +49,7 @@ export const routes: Route[] = [
       const conversation = msg.conversation()
       const key = `Conversation:${conversation.id}:Message`
       const history: any = cache.get(key) || []
-      let answer: string | undefined | MediaMessage;
+      let answer: string | undefined | FileBox;
       if (state.globalReplyState === 'text'){
         answer = await reply([
           ...history,
@@ -77,10 +77,7 @@ ${answer}`
       }else{
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
-        const buffer = Buffer.from(base64Str, 'base64');
-        const imagePath = './image.png';
-        writeFileSync(imagePath, buffer);
-        answer = FileBox.fromFile(imagePath);
+        answer = FileBox.FromBase64(base64Str);
       }
       return answer
     },
