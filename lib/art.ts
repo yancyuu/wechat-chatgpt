@@ -17,48 +17,33 @@ interface TextToImageResponse {
 }
 
 async function getToken(apiKey: string): Promise<string> {
+  const url = 'https://flagopen.baai.ac.cn/flagStudio/auth/getToken';
+
   const querystring = {
     apikey: apiKey,
   };
-  // TODO: wretch retry 中间件无法返回 40x 异常，需修复
-  const w = wretch(config.sdBaseURL).middlewares([
-    // retry({
-    //   delayTimer: 500,
-    //   maxAttempts: 3,
-    //   until (response, error) {
-    //     return response && response.ok
-    //   }
-    // })
-  ])
+
   const headers = {
     Accept: 'application/json',
   };
 
   try {
-    const response: TokenResponse =await w.url("/auth/getToken")
+    const response = await wretch(url)
+      .query(querystring)
       .headers(headers)
-      .get(querystring)
+      .get<TokenResponse>()
       .json();
 
     return response.data.token;
   } catch (error) {
-    logger.error(error);
+    console.error(error);
     throw error;
   }
 }
 
 async function getTextToImage(token: string, payload: object): Promise<string> {
 
-  // TODO: wretch retry 中间件无法返回 40x 异常，需修复
-  const w = wretch(config.sdBaseURL).middlewares([
-    // retry({
-    //   delayTimer: 500,
-    //   maxAttempts: 3,
-    //   until (response, error) {
-    //     return response && response.ok
-    //   }
-    // })
-  ])
+  const url = 'https://flagopen.baai.ac.cn/flagStudio/v1/text2img';
 
   const headers = {
     'Content-Type': 'application/json',
@@ -67,9 +52,9 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
   };
 
   try {
-    const response: TextToImageResponse =await w.url("/v1/text2img")
+    const response = await wretch(url)
       .headers(headers)
-      .post(payload)
+      .post<TextToImageResponse>(payload)
       .json();
 
     return response.data;
