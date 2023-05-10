@@ -75,7 +75,7 @@ ${answer}`
         const { FileBox }  = require('file-box')
         const prompts = text.split(",")
         const base64Str = await getImage(prompts)
-        answer = FileBox.FromBase64(base64Str);
+        answer = FileBox.fromBase64(base64Str);
       }
       return answer
     },
