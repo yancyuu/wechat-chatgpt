@@ -11,6 +11,7 @@ type Config = {
   privatePrefix: string
 
   baseURL: string
+  sdBaseURL: string
   apiKey: string[]
   sdApiKey: string
   model: string
@@ -23,7 +24,7 @@ export default {
   apiKey: process.env.OPEN_API_KEY.split(','),
   sdApiKey: process.env.SD_API_KEY,
   model: process.env.GPT_MODEL || 'gpt-3.5-turbo',
-
+  sdBaseURL: process.env.BASE_SD_URL || 'https://flagopen.baai.ac.cn/flagStudio',
   prompt: process.env.PROMPT || '',
   // 自动同意添加好友的口令
   acceptText: /ChatGPT/,

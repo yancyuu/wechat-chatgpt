@@ -17,8 +17,6 @@ interface TextToImageResponse {
 }
 
 async function getToken(apiKey: string): Promise<string> {
-  const url = 'https://flagopen.baai.ac.cn/flagStudio/auth/getToken';
-
   const querystring = {
     apikey: apiKey,
   };
@@ -28,7 +26,7 @@ async function getToken(apiKey: string): Promise<string> {
   };
 
   try {
-    const response: TokenResponse = await wretch(url)
+    const response: TokenResponse = await wretch(config.sdBaseURL).url("/auth/getToken")
       .query(querystring)
       .headers(headers)
       .get()
@@ -42,7 +40,6 @@ async function getToken(apiKey: string): Promise<string> {
 }
 
 async function getTextToImage(token: string, payload: object): Promise<string> {
-  const url = 'https://flagopen.baai.ac.cn/flagStudio/v1/text2img';
 
   const headers = {
     'Content-Type': 'application/json',
@@ -51,7 +48,7 @@ async function getTextToImage(token: string, payload: object): Promise<string> {
   };
 
   try {
-    const response: TextToImageResponse = await wretch(url)
+    const response: TextToImageResponse = await wretch(config.sdBaseURL).url("/v1/text2img")
       .headers(headers)
       .post(payload)
       .json();
