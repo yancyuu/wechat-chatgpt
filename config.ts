@@ -12,6 +12,7 @@ type Config = {
 
   baseURL: string
   apiKey: string[]
+  sdApiKey: string
   model: string
 
   sentryDSN?: string;
@@ -20,6 +21,7 @@ type Config = {
 export default {
   baseURL: process.env.BASE_URL || 'https://api.openai.com',
   apiKey: process.env.OPEN_API_KEY.split(','),
+  sdApiKey: process.env.SD_API_KEY,
   model: process.env.GPT_MODEL || 'gpt-3.5-turbo',
 
   prompt: process.env.PROMPT || '',
@@ -33,10 +35,8 @@ export default {
 
   // 是否开启私聊模式，可使用正则以及 boolen，如果是正则用以决定与谁私聊
   enablePrivate: true,
-  // enablePrivate: /(山月)/,
-
   groupPrefix: '',
-  privatePrefix: '山月',
+  privatePrefix: 'Yancy',
 
   // 开启异常报错上传 sentry
   sentryDsn: process.env.SENTRY_DSN || ''
